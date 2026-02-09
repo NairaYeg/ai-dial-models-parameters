@@ -7,6 +7,30 @@ DEFAULT_SYSTEM_PROMPT = "You are an assistant who answers concisely and informat
 DIAL_ENDPOINT = "https://ai-proxy.lab.epam.com/openai/deployments/{model}/chat/completions"
 
 
+def test_with_message(
+        deployment_name: str,
+        user_message: str,
+        print_request: bool = True,
+        print_only_content: bool = False,
+        **kwargs
+) -> None:
+    """Send a single predefined message to the model and print the response."""
+    client = DialClient(
+        endpoint=DIAL_ENDPOINT,
+        deployment_name=deployment_name,
+    )
+    conversation = Conversation()
+    conversation.add_message(Message(Role.SYSTEM, DEFAULT_SYSTEM_PROMPT))
+    conversation.add_message(Message(Role.USER, user_message))
+
+    client.get_completion(
+        messages=conversation.get_messages(),
+        print_request=print_request,
+        print_only_content=print_only_content,
+        **kwargs
+    )
+
+
 def run(
         deployment_name: str,
         print_request: bool = True,

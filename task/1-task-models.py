@@ -1,4 +1,4 @@
-from task.app.main import run
+from task.app.main import test_with_message
 
 # HINT: All available models you can find here: https://ai-proxy.lab.epam.com/openai/models
 
@@ -11,11 +11,40 @@ from task.app.main import run
 # - claude-3-7-sonnet@20250219
 # - gemini-2.5-pro
 
-run(
-    deployment_name='INSERT_DEPLOYMENT_NAME',
-    print_request=False, # Switch to False if you do not want to see the request in console
-    print_only_content=False, # Switch to True if you want to see only content from response
+USER_MESSAGE = "What LLMs can do?"
+
+# Test with GPT-4o
+print("\n" + "="*50 + " Testing with gpt-4o " + "="*50)
+test_with_message(
+    deployment_name='gpt-4o',
+    user_message=USER_MESSAGE,
+    print_request=False,
+    print_only_content=True,
 )
+
+# Test with Claude 
+print("\n" + "="*50 + " Testing with claude-3-7-sonnet@20250219 " + "="*50)
+try:
+    test_with_message(
+        deployment_name='claude-3-7-sonnet@20250219',
+        user_message=USER_MESSAGE,
+        print_request=False,
+        print_only_content=True,
+    )
+except Exception as e:
+    print(f"⚠️  Model not accessible: {e}")
+
+# Test with Gemini 
+print("\n" + "="*50 + " Testing with gemini-2.5-pro " + "="*50)
+try:
+    test_with_message(
+        deployment_name='gemini-2.5-pro',
+        user_message=USER_MESSAGE,
+        print_request=False,
+        print_only_content=True,
+    )
+except Exception as e:
+    print(f"⚠️  Model not accessible: {e}")
 
 # The main goal of this task is to explore the functional capabilities of DIAL to be able to work with different
 # LLMs through unified API

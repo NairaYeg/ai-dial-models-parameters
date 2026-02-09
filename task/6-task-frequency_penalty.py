@@ -1,4 +1,4 @@
-from task.app.main import run
+from task.app.main import test_with_message
 
 # TODO:
 #  Try `frequency_penalty` parameter.
@@ -8,11 +8,33 @@ from task.app.main import run
 #       Default: 0.0
 #  User massage: Explain the water cycle in simple terms for children
 
-run(
+USER_MESSAGE = "Explain the water cycle in simple terms for children"
+
+# Test with negative frequency_penalty (more repetition)
+print("\n" + "="*50 + " frequency_penalty = -1.0 (More repetition) " + "="*50)
+test_with_message(
     deployment_name='gpt-4o',
+    user_message=USER_MESSAGE,
     print_only_content=True,
-    # TODO:
-    #  Use `frequency_penalty` parameter with different range (-2.0 to 2.0).
+    frequency_penalty=-1.0
+)
+
+# Test with default frequency_penalty
+print("\n" + "="*50 + " frequency_penalty = 0.0 (Default) " + "="*50)
+test_with_message(
+    deployment_name='gpt-4o',
+    user_message=USER_MESSAGE,
+    print_only_content=True,
+    frequency_penalty=0.0
+)
+
+# Test with positive frequency_penalty (less repetition)
+print("\n" + "="*50 + " frequency_penalty = 1.5 (Less repetition) " + "="*50)
+test_with_message(
+    deployment_name='gpt-4o',
+    user_message=USER_MESSAGE,
+    print_only_content=True,
+    frequency_penalty=1.5
 )
 
 # Pay attention that when we set for `gpt-4o` frequency_penalty as -2.0 - the request is running too long,

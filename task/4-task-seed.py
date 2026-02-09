@@ -1,4 +1,4 @@
-from task.app.main import run
+from task.app.main import test_with_message
 
 # TODO:
 #  Try the `seed` parameter:
@@ -8,11 +8,25 @@ from task.app.main import run
 #       Default: None or random unless specified on the LLM side
 #  User massage: Name a random animal
 
-run(
+USER_MESSAGE = "Name a random animal"
+
+# Test with seed for deterministic results
+print("\n" + "="*50 + " With seed=42 (Deterministic) " + "="*50)
+test_with_message(
     deployment_name='gpt-4o',
-    # TODO:
-    #  1. Use `seed` parameter with value 42 (or whatever you want)
-    #  2. Use `n` parameter with value 5
+    user_message=USER_MESSAGE,
+    seed=42,
+    n=5,
+    print_only_content=True
+)
+
+# Test without seed for comparison
+print("\n" + "="*50 + " Without seed (Random) " + "="*50)
+test_with_message(
+    deployment_name='gpt-4o',
+    user_message=USER_MESSAGE,
+    n=5,
+    print_only_content=True
 )
 
 # Check the content in choices. The expected result is that in almost all choices the result will be the same.
